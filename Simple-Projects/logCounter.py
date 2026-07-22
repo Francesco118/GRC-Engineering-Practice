@@ -1,10 +1,29 @@
-#READ
-with open ("sample.txt", "r") as log_file: #Open the log file in read mode (r)
-    log_contents = log_file.readlines() # Read the contents of the log file
-    log_contents = [line.strip() for line in log_contents] #removes blank lines and whitespace from the beginning and end of each line
-    for line in log_contents:
-        print(line) #each line of the log file is printed to the console
+from pathlib import Path
 
-#PARSE
+script_dir = Path(__file__).resolve().parent
+log_file_path = script_dir / "log-sample.txt"
 
-#COUNT
+with open(log_file_path, "r") as log_file:
+    log_contents = log_file.readlines()
+    log_contents = [line.strip() for line in log_contents]
+
+records = []
+
+for line in log_contents:
+    parts = line.split()
+
+    entry = {
+        "date": parts[0],
+        "time": parts[1],
+        "level": parts[2],
+        "category": parts[3],
+        "action": parts[4],
+        "user": parts[5],
+        "result": parts[6],
+    }
+
+    records.append(entry)
+
+print(records[0])
+print(records[0]["level"])
+print(records[0]["user"])
